@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  padding: 8px;
+  font-size: 40px;
+  color: #00b2b9;
+  font-family: "Lumanosimo", cursive;
+  user-select: none;
+  text-shadow: 2px 2px 5px black;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  padding: 8px;
+  font-size: 30px;
+  color: #d75b14;
+  transition: 350ms all ease-in-out;
+}
+
+.add-icon:hover {
+  cursor: pointer;
+  color: #d08050;
+  transform: rotate(90deg) scale(1.2);
+}

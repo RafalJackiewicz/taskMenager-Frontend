@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --text-of-task: #262626;
+  --hover-text: #676767;
+}
+
+.one-task {
+  display: flex;
+  padding: 5px;
+  font-size: 16px;
+  justify-content: flex-end;
+  border-bottom: 2px dashed rgba(12, 12, 12, 0.5);
+}
+
+.one-task:last-child {
+  border-bottom: none;
+}
+
+.checkbox {
+  width: 18px;
+  margin-right: 5px;
+}
+
+.name-task {
+  margin-right: auto;
+  color: var(--text-of-task);
+  user-select: none;
+}
+
+.name-task:hover {
+}
+
+.trash-icon {
+  color: var(--text-of-task);
+  padding: 5px;
+  cursor: pointer;
+  transition: 250ms scale ease-in-out;
+}
+
+.trash-icon:hover {
+  color: var(--hover-text);
+  transform: scale(1.1);
+}
+
+.edit-icon {
+  padding: 5px;
+  cursor: pointer;
+  transition: 250ms scale ease-in-out;
+}
+
+.edit-icon > a {
+  color: var(--text-of-task);
+}
+
+.edit-icon > a:hover > * {
+  color: var(--hover-text);
+  transform: scale(1.1);
+}
+
+.completed {
+  text-decoration: line-through #da4444 2px;
+  color: #5b5b5b;
+}
