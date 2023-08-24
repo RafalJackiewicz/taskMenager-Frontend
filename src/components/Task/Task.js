@@ -13,11 +13,10 @@ const Task = (props) => {
 
   const handleChecked = (e) => {
     console.log(e);
-    console.log("cos");
     setCheckboxChecked(!checkboxChecked);
   };
 
-  const editTitleOfTask = (e) => {
+  const editTitleOfTask = () => {
     console.log(props.name);
     // <Link to="edit-task" />;
   };
