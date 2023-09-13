@@ -38,7 +38,7 @@ const Form = (props) => {
       console.log("wystąpił bład");
     }
 
-    // console.log(event.target.value);
+    // console.log(event.target.valusasde);
   };
 
   return (
