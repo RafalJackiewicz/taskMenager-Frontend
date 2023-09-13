@@ -41,14 +41,6 @@ const Form = (props) => {
     // console.log(event.target.value);
   };
 
-  // const confirmForm = () => {
-  //   if (props.editing === false) {
-  //   } else {
-  //     console.log("zatwierdzono formularz");
-  //     //edycja taska
-  //   }
-  // };
-
   return (
     <div>
       <div className="hidden-tasks">

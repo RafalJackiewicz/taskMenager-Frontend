@@ -14,6 +14,7 @@ const Main = () => {
         setTasks(data.data);
       });
   };
+
   useEffect(() => {
     fetchUserData();
   }, [tasks]);
