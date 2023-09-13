@@ -7,7 +7,6 @@ import { Link, useParams } from "react-router-dom";
 
 const Form = (props) => {
   const param = useParams();
-  console.log(param);
   const nameTask = param.hasOwnProperty("id") ? param.id : "";
   const [name, setName] = useState(nameTask);
   const titleOfLabel = props.editing
@@ -22,17 +21,33 @@ const Form = (props) => {
     console.log("klinieto x");
   };
 
-  const submitForm = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
+    console.log(name);
+    try {
+      const data = await fetch("http://localhost:3100/add-task", {
+        method: "POST",
+        body: JSON.stringify({ title: name }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await data.json();
+      console.log(res);
+    } catch {
+      console.log("wystąpił bład");
+    }
+
+    // console.log(event.target.value);
   };
 
-  const confirmForm = () => {
-    if (props.editing === false) {
-    } else {
-      console.log("zatwierdzono formularz");
-      //edycja taska
-    }
-  };
+  // const confirmForm = () => {
+  //   if (props.editing === false) {
+  //   } else {
+  //     console.log("zatwierdzono formularz");
+  //     //edycja taska
+  //   }
+  // };
 
   return (
     <div>
@@ -55,9 +70,7 @@ const Form = (props) => {
               />
               <label htmlFor="">{titleOfLabel}</label>
               <p className="input-warning"></p>
-              <button className="btn-confirm" onClick={confirmForm}>
-                Confirm
-              </button>
+              <button className="btn-confirm">Confirm</button>
             </div>
           </form>
         </div>

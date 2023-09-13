@@ -18,7 +18,6 @@ const Main = () => {
     fetchUserData();
   }, [tasks]);
 
-  // const listTasks =
   return (
     <div className="tasks-box">
       {tasks.map((e) => (
