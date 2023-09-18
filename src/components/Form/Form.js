@@ -4,6 +4,7 @@ import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
+import { redirect } from "react-router";
 
 const Form = (props) => {
   const param = useParams();
@@ -23,7 +24,6 @@ const Form = (props) => {
 
   const submitForm = async (event) => {
     event.preventDefault();
-    console.log(name);
     try {
       const data = await fetch("http://localhost:3100/add-task", {
         method: "POST",
@@ -33,7 +33,8 @@ const Form = (props) => {
         },
       });
       const res = await data.json();
-      console.log(res);
+
+      // window.location.href = "/";
     } catch {
       console.log("wystąpił bład");
     }
@@ -62,7 +63,9 @@ const Form = (props) => {
               />
               <label htmlFor="">{titleOfLabel}</label>
               <p className="input-warning"></p>
-              <button className="btn-confirm">Confirm</button>
+              <button className="btn-confirm" onClick={backToMain}>
+                Confirm
+              </button>
             </div>
           </form>
         </div>
