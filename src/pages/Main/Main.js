@@ -17,12 +17,17 @@ const Main = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [tasks]);
+  }, []);
 
   return (
     <div className="tasks-box">
       {tasks.map((e) => (
-        <Task key={e.id} name={e.title} isCompleted={e.isCompleted} />
+        <Task
+          key={e.id}
+          idTask={e.id}
+          name={e.title}
+          isCompleted={e.isCompleted}
+        />
       ))}
       <Outlet />
     </div>

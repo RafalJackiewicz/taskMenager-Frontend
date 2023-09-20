@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from "react-router-dom";
-import { redirect } from "react-router";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Form = (props) => {
   const param = useParams();
@@ -13,33 +12,44 @@ const Form = (props) => {
   const titleOfLabel = props.editing
     ? "Name for editing task"
     : "Name for new task";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        navigate("/");
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
 
   const handleChange = (event) => {
     setName(event.target.value);
   };
 
-  const backToMain = () => {
-    console.log("klinieto x");
-  };
+  // const backToMain = () => {
+  //   //nic nie robi to
+  //   console.log("klinieto x");
+  // };
 
   const submitForm = async (event) => {
     event.preventDefault();
     try {
-      const data = await fetch("http://localhost:3100/add-task", {
+      await fetch("http://localhost:3100/add-task", {
         method: "POST",
         body: JSON.stringify({ title: name }),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const res = await data.json();
-
-      // window.location.href = "/";
+      // const res = await data.json();
+      navigate("/");
     } catch {
       console.log("wystąpił bład");
     }
-
-    // console.log(event.target.valus sde);
   };
 
   return (
@@ -47,7 +57,7 @@ const Form = (props) => {
       <div className="hidden-tasks">
         <div className="wrapper">
           <Link to="/">
-            <span className="close-icon" onClick={backToMain}>
+            <span className="close-icon">
               {" "}
               <FontAwesomeIcon icon={faXmark} />
             </span>
@@ -63,9 +73,7 @@ const Form = (props) => {
               />
               <label htmlFor="">{titleOfLabel}</label>
               <p className="input-warning"></p>
-              <button className="btn-confirm" onClick={backToMain}>
-                Confirm
-              </button>
+              <button className="btn-confirm">Confirm</button>
             </div>
           </form>
         </div>

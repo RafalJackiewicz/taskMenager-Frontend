@@ -3,22 +3,39 @@ import "./Task.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Task = (props) => {
   const isTaskCompleted = props.isCompleted
     ? "name-task completed"
     : "name-task";
   const [checkboxChecked, setCheckboxChecked] = useState(props.isCompleted);
-
   const handleChecked = (e) => {
     console.log(e);
     setCheckboxChecked(!checkboxChecked);
   };
-
+  const { idTask, name } = props;
+  const navigate = useNavigate();
   const editTitleOfTask = () => {
     console.log(props.name);
     // <Link to="edit-task" />;
+  };
+
+  const handleDeleteTask = async () => {
+    console.log("klik");
+    try {
+      await fetch("http://localhost:3100/delete", {
+        method: "DELETE",
+        body: JSON.stringify({ id: idTask }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      navigate("/");
+    } catch (e) {
+      console.log("wystąpił bład");
+    }
+    console.log(`Usun task o nazwie: ${name} i id: ${idTask}`);
   };
   return (
     <div className="one-task">
@@ -38,7 +55,7 @@ const Task = (props) => {
         </Link>
       </span>
 
-      <span className="trash-icon">
+      <span className="trash-icon" onClick={handleDeleteTask}>
         {" "}
         <FontAwesomeIcon icon={faTrash} />
       </span>
