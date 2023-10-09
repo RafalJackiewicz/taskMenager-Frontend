@@ -5,22 +5,8 @@ import "./Main.css";
 import Task from "../../components/Task/Task";
 import { Outlet } from "react-router";
 
-const Main = () => {
-  const [tasks, setTasks] = useState([]);
-
-  const fetchUserData = () => {
-    try {
-      const res = axios
-        .get(process.env.REACT_APP_SERVEURL)
-        .then((data) => setTasks(data.data.data));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+const Main = (props) => {
+  const { tasks, getData } = props;
 
   return (
     <div className="tasks-box">
@@ -30,6 +16,7 @@ const Main = () => {
           idTask={e.id}
           name={e.title}
           isCompleted={e.isCompleted}
+          getData={getData}
         />
       ))}
       <Outlet />

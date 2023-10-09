@@ -11,9 +11,8 @@ const Task = (props) => {
     ? "name-task completed"
     : "name-task";
   const [checkboxChecked, setCheckboxChecked] = useState(props.isCompleted);
-  const { idTask, name, isCompleted } = props;
+  const { idTask, name, isCompleted, getData } = props;
   const navigate = useNavigate();
-
   const handleChecked = (e) => {
     console.log(idTask);
     console.log(e.target);
@@ -36,7 +35,8 @@ const Task = (props) => {
         },
       });
       // navigate("/");
-      window.location.reload();
+      // window.location.reload();
+      getData();
     } catch (e) {
       console.log("wystąpił bład");
     }
