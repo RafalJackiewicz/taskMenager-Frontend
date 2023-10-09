@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import "./Main.css";
 import Task from "../../components/Task/Task";
@@ -8,11 +9,13 @@ const Main = () => {
   const [tasks, setTasks] = useState([]);
 
   const fetchUserData = () => {
-    fetch("http://localhost:3100/")
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data.data);
-      });
+    try {
+      const res = axios
+        .get(process.env.REACT_APP_SERVEURL)
+        .then((data) => setTasks(data.data.data));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

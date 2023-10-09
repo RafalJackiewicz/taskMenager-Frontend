@@ -4,18 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Task = (props) => {
   const isTaskCompleted = props.isCompleted
     ? "name-task completed"
     : "name-task";
   const [checkboxChecked, setCheckboxChecked] = useState(props.isCompleted);
+  const { idTask, name, isCompleted } = props;
+  const navigate = useNavigate();
+
   const handleChecked = (e) => {
-    console.log(e);
+    console.log(idTask);
+    console.log(e.target);
     setCheckboxChecked(!checkboxChecked);
   };
-  const { idTask, name } = props;
-  const navigate = useNavigate();
+
   const editTitleOfTask = () => {
     console.log(props.name);
     // <Link to="edit-task" />;
@@ -31,7 +35,8 @@ const Task = (props) => {
           "Content-Type": "application/json",
         },
       });
-      navigate("/");
+      // navigate("/");
+      window.location.reload();
     } catch (e) {
       console.log("wystąpił bład");
     }
