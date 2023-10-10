@@ -14,6 +14,7 @@ const Form = (props) => {
     ? "Name for editing task"
     : "Name for new task";
   const navigate = useNavigate();
+  const { getData } = props;
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -31,11 +32,6 @@ const Form = (props) => {
     setTask(event.target.value);
   };
 
-  // const backToMain = () => {
-  //   //nic nie robi to
-  //   console.log("klinieto x");
-  // };
-
   const submitForm = async (event) => {
     event.preventDefault();
     try {
@@ -46,8 +42,8 @@ const Form = (props) => {
           "Content-Type": "application/json",
         },
       });
-      // const res = await data.json();
       navigate("/");
+      getData();
     } catch {
       console.log("wystąpił bład");
     }

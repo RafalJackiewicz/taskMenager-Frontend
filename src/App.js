@@ -12,7 +12,6 @@ function App() {
     try {
       const res = await axios.get("http://localhost:3100/");
       const data = await res.data.data;
-      console.log(data);
       setTasks(data);
     } catch (err) {
       console.log(err);
@@ -26,10 +25,30 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main tasks={tasks} getData={getData} />}>
-          <Route path="/add-task" element={<Form editing={false} />}>
+          <Route
+            path="/add-task"
+            element={
+              <Form
+                editing={false}
+                tasks={tasks}
+                setTasks={setTasks}
+                getData={getData}
+              />
+            }
+          >
             {" "}
           </Route>
-          <Route path="edit-task/:id" element={<Form editing={true} />}>
+          <Route
+            path="edit-task/:id"
+            element={
+              <Form
+                editing={true}
+                tasks={tasks}
+                setTasks={setTasks}
+                getData={getData}
+              />
+            }
+          >
             {" "}
           </Route>
         </Route>
