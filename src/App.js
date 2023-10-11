@@ -39,7 +39,7 @@ function App() {
             {" "}
           </Route>
           <Route
-            path="edit-task/:id"
+            path="edit-task/:taskName"
             element={
               <Form
                 editing={true}

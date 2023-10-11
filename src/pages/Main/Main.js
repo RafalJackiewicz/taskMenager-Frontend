@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import "./Main.css";
 import Task from "../../components/Task/Task";

@@ -7,25 +7,19 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Task = (props) => {
-  const isTaskCompleted = props.isCompleted
-    ? "name-task completed"
-    : "name-task";
-  const [checkboxChecked, setCheckboxChecked] = useState(props.isCompleted);
   const { idTask, name, isCompleted, getData } = props;
+  const isTaskCompleted = isCompleted ? "name-task completed" : "name-task";
+  const [checkboxChecked, setCheckboxChecked] = useState(isCompleted);
+
   const navigate = useNavigate();
   const handleChecked = (e) => {
     console.log(idTask);
     console.log(e.target);
     setCheckboxChecked(!checkboxChecked);
-  };
-
-  const editTitleOfTask = () => {
-    console.log(props.name);
-    // <Link to="edit-task" />;
+    getData();
   };
 
   const handleDeleteTask = async () => {
-    console.log("klik");
     try {
       await fetch("http://localhost:3100/delete", {
         method: "DELETE",
@@ -34,10 +28,8 @@ const Task = (props) => {
           "Content-Type": "application/json",
         },
       });
-      // navigate("/");
-      // window.location.reload();
       getData();
-    } catch (e) {
+    } catch (err) {
       console.log("wystąpił bład");
     }
     console.log(`Usun task o nazwie: ${name} i id: ${idTask}`);
@@ -52,9 +44,9 @@ const Task = (props) => {
       />
       <h3 className={isTaskCompleted}>{props.name}</h3>
 
-      <span className="edit-icon" onClick={editTitleOfTask}>
+      <span className="edit-icon">
         {" "}
-        <Link to={`/edit-task/${props.name}`}>
+        <Link to={`/edit-task/${props.name}`} state={{ idTask: idTask }}>
           {" "}
           <FontAwesomeIcon icon={faPenToSquare} />
         </Link>

@@ -3,18 +3,19 @@ import { useState } from "react";
 import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Form = (props) => {
-  const param = useParams();
-  const nameTask = param.hasOwnProperty("id") ? param.id : "";
+  const oldTaskName = useParams();
+  const nameTask = oldTaskName.hasOwnProperty("taskName")
+    ? oldTaskName.taskName
+    : "";
   const [task, setTask] = useState(nameTask);
-  const titleOfLabel = props.editing
-    ? "Name for editing task"
-    : "Name for new task";
+  const { editing, getData } = props;
+  const idTask = useLocation();
+  const titleOfLabel = editing ? "Name for editing task" : "Name for new task";
   const navigate = useNavigate();
-  const { getData } = props;
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -35,18 +36,33 @@ const Form = (props) => {
   const submitForm = async (event) => {
     event.preventDefault();
     try {
-      await fetch("http://localhost:3100/add-task", {
-        method: "POST",
-        body: JSON.stringify({ title: task }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      if (editing) {
+        await axios.patch("http://localhost:3100/edit-task", {
+          id: idTask.state.idTask,
+          title: task,
+        });
+      } else {
+        await axios.post("http://localhost:3100/add-task", { title: task });
+      }
       navigate("/");
       getData();
     } catch {
       console.log("wystąpił bład");
     }
+
+    // try {
+    //   await fetch("http://localhost:3100/add-task", {
+    //     method: "POST",
+    //     body: JSON.stringify({ title: task }),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   });
+    //   navigate("/");
+    //   getData();
+    // } catch {
+    //   console.log("wystąpił bład");
+    // }
   };
 
   return (
