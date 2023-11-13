@@ -4,18 +4,31 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 const Task = (props) => {
   const { idTask, name, isCompleted, getData } = props;
   const isTaskCompleted = isCompleted ? "name-task completed" : "name-task";
   const [checkboxChecked, setCheckboxChecked] = useState(isCompleted);
 
-  const navigate = useNavigate();
-  const handleChecked = (e) => {
-    console.log(idTask);
-    console.log(e.target);
+  // const navigate = useNavigate();
+  const handleChecked = async (e) => {
     setCheckboxChecked(!checkboxChecked);
+    try {
+      await fetch("http://localhost:3100/toggle", {
+        method: "PATCH",
+        body: JSON.stringify({ id: idTask, isCompleted: checkboxChecked }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (err) {
+      console.log("wystąpił bład");
+    }
+
+    // console.log(idTask, checkboxChecked);
+    console.log(e.target);
+
     getData();
   };
 
